@@ -1,21 +1,15 @@
 package com.taste.app.database
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.taste.app.model.Category
-import com.taste.app.model.Meal
-import com.taste.app.util.getOrAwaitValue
 import org.hamcrest.CoreMatchers.equalTo
-import org.junit.After
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertThat
 import org.junit.Before
-
-import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.IOException
+import util.getOrAwaitValue
 
 @RunWith(AndroidJUnit4::class)
 class MealDaoTest : TasteDatabaseTest() {
