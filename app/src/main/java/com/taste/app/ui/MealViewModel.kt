@@ -1,9 +1,11 @@
 package com.taste.app.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.taste.app.AppExecutors
 import com.taste.app.di.AppModule
 import com.taste.app.model.Category
 import com.taste.app.model.Meal
@@ -11,10 +13,12 @@ import com.taste.app.repo.MealRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.concurrent.Executor
 import javax.inject.Inject
 
-open class CategoryViewModel @Inject constructor(
+open class MealViewModel @Inject constructor(
     private val repository: MealRepository,
+    private val appExecutors: AppExecutors,
     @AppModule.IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
 
@@ -37,11 +41,16 @@ open class CategoryViewModel @Inject constructor(
                 }
             }.onSuccess { response ->
                 if (response.isSuccessful && response.body() != null && !response.body()?.categories.isNullOrEmpty()) {
-                    repository.saveCategories(response.body()!!.categories!!)
+                    appExecutors.networkIO().execute {
+                        repository.saveCategories(response.body()!!.categories!!)
+                    }
                     success()
                 } else {
                     error()
                 }
+            }.onFailure {
+                Log.e(this::class.java.simpleName, it.message, it)
+                error()
             }
         }
     }
@@ -55,7 +64,9 @@ open class CategoryViewModel @Inject constructor(
                 }
             }.onSuccess { response ->
                 if (response.isSuccessful && response.body() != null && !response.body()?.meals.isNullOrEmpty()) {
-                    repository.saveMeals(response.body()!!.meals!!)
+                    appExecutors.networkIO().execute {
+                        repository.saveMeals(response.body()!!.meals!!)
+                    }
                     success()
                 } else {
                     error()
@@ -90,4 +101,10 @@ open class CategoryViewModel @Inject constructor(
         error.value = true
     }
 
+}
+
+class InstantAppExecutors : AppExecutors(instant, instant, instant) {
+    companion object {
+        private val instant = Executor { it.run() }
+    }
 }

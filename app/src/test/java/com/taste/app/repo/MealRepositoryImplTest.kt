@@ -40,8 +40,6 @@ class MealRepositoryImplTest {
     private lateinit var mockCategoryResponseCall: Call<CategoryResponse>
     @Mock
     private lateinit var mockMealResponseCall: Call<MealResponse>
-    @Mock
-    private lateinit var mockMealErrorResponseCall: Call<String>
 
     @Rule
     @JvmField

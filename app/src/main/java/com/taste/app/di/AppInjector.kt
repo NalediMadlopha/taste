@@ -48,7 +48,6 @@ object AppInjector {
         if (activity is HasAndroidInjector) {
             AndroidInjection.inject(activity)
         }
-
         if (activity is FragmentActivity) {
             activity.supportFragmentManager
                 .registerFragmentLifecycleCallbacks(

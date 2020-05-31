@@ -18,7 +18,7 @@ package com.taste.app.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.taste.app.ui.CategoryViewModel
+import com.taste.app.ui.MealViewModel
 import com.taste.app.viewmodel.TasteViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -30,8 +30,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(CategoryViewModel::class)
-    abstract fun bindCategoryViewModel(categoryViewModel: CategoryViewModel): ViewModel
+    @ViewModelKey(MealViewModel::class)
+    abstract fun bindCategoryViewModel(mealViewModel: MealViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: TasteViewModelFactory): ViewModelProvider.Factory
