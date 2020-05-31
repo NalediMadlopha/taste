@@ -5,15 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.taste.app.model.Category
-import com.taste.app.model.Ingredients
 import com.taste.app.model.Meal
 
-@Database(entities = [Category::class, Meal::class, Ingredients::class], version = 1, exportSchema = false)
+@Database(entities = [Category::class, Meal::class], version = 2, exportSchema = false)
 abstract class TasteDatabase : RoomDatabase() {
 
     abstract fun categoryDao(): CategoryDao
     abstract fun mealDao(): MealDao
-    abstract fun ingredientsDao(): IngredientsDao
 
     companion object {
         @Volatile
