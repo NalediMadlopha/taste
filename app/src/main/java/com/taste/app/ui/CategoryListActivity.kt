@@ -1,56 +1,53 @@
 package com.taste.app.ui
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.taste.app.R
 import com.taste.app.di.Injectable
 import com.taste.app.util.showSnackBar
 import dagger.android.AndroidInjection
-import dagger.android.DispatchingAndroidInjector
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_category_list.*
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(), Injectable, SwipeRefreshLayout.OnRefreshListener {
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+class CategoryListActivity : AppCompatActivity(), Injectable, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel: MealViewModel by viewModels { viewModelFactory }
+    private val viewModel: CategoryViewModel by viewModels { viewModelFactory }
     private lateinit var adapter: CategoryListAdapter
-    private lateinit var categoryListRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_category_list)
 
         categoryListSwipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.design_default_color_secondary))
         categoryListSwipeRefreshLayout.setOnRefreshListener(this)
 
-        adapter = CategoryListAdapter(emptyList(), this@MainActivity::displayCategoryMeals)
-        categoryListRecyclerView = findViewById(R.id.categoryListRecyclerView)
+        adapter = CategoryListAdapter(emptyList(), this@CategoryListActivity::displayCategoryMeals)
         categoryListRecyclerView.adapter = adapter
 
-        observeCategories()
         observeLoadingState()
         observeSuccessState()
         observeErrorState()
+        observeCategories()
     }
 
     private fun observeCategories() {
         viewModel.getCategories().observe(this, Observer {
             adapter.updateCategories(it)
+        })
+    }
+
+    private fun observeLoadingState() {
+        viewModel.isLoading().observe(this, Observer {
+            categoryListSwipeRefreshLayout.isRefreshing = it;
         })
     }
 
@@ -64,12 +61,6 @@ class MainActivity : AppCompatActivity(), Injectable, SwipeRefreshLayout.OnRefre
                     R.color.design_default_color_secondary
                 )
             }
-        })
-    }
-
-    private fun observeLoadingState() {
-        viewModel.isLoading().observe(this, Observer {
-            categoryListSwipeRefreshLayout.isRefreshing = it;
         })
     }
 
@@ -91,6 +82,7 @@ class MainActivity : AppCompatActivity(), Injectable, SwipeRefreshLayout.OnRefre
     }
 
     private fun displayCategoryMeals(category: String) {
-        Toast.makeText(this, category, Toast.LENGTH_LONG).show()
+        startActivity(MealListActivity.createIntent(this, category))
     }
+
 }

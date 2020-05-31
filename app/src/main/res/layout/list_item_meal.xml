@@ -21,14 +21,14 @@
         android:orientation="vertical">
         
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/categoryImageView"
+            android:id="@+id/mealImageView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/card_view_image_height"
             android:scaleType="fitXY"
             android:contentDescription="@string/category_card_view_image_content_description" />
 
         <TextView
-            android:id="@+id/categoryNameTextView"
+            android:id="@+id/mealNameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/default_16dp"
@@ -37,12 +37,6 @@
             android:maxLines="2"
             android:textStyle="bold"
             tools:text="Category" />
-
-        <TextView
-            android:id="@+id/categoryDescriptionTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="Category description" />
 
     </LinearLayout>
 
