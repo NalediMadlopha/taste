@@ -7,14 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.taste.app.AppExecutors
 import com.taste.app.di.AppModule
-import com.taste.app.model.Meal
+import com.taste.app.model.Category
 import com.taste.app.repo.MealRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-open class MealViewModel @Inject constructor(
+open class CategoryViewModel @Inject constructor(
     private val repository: MealRepository,
     private val appExecutors: AppExecutors,
     @AppModule.IoDispatcher private val ioDispatcher: CoroutineDispatcher
@@ -30,20 +30,17 @@ open class MealViewModel @Inject constructor(
 
     fun isError(): LiveData<Boolean> = error
 
-    fun fetchMeals(category: String) {
+    fun fetchCategories() {
         loading()
         viewModelScope.launch {
             kotlin.runCatching {
                 withContext(ioDispatcher) {
-                    repository.fetchMeals(category)
+                    repository.fetchCategories()
                 }
             }.onSuccess { response ->
-                if (response.isSuccessful && response.body() != null && !response.body()?.meals.isNullOrEmpty()) {
+                if (response.isSuccessful && response.body() != null && !response.body()?.categories.isNullOrEmpty()) {
                     appExecutors.networkIO().execute {
-                        response.body()!!.meals!!.forEach { meal ->
-                            meal.strCategory = category
-                        }
-                        repository.saveMeals(response.body()!!.meals!!)
+                        repository.saveCategories(response.body()!!.categories!!)
                     }
                     success()
                 } else {
@@ -56,8 +53,8 @@ open class MealViewModel @Inject constructor(
         }
     }
 
-    fun getMeals(category: String): LiveData<List<Meal>> {
-        return repository.getMeals(category)
+    fun getCategories(): LiveData<List<Category>> {
+        return repository.getCategories()
     }
 
     private fun loading() {
