@@ -5,26 +5,16 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "meal_table")
+@Entity(tableName = "meal")
 data class Meal(
     @NonNull
     @PrimaryKey
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "idMeal")
     val idMeal: String,
-    @ColumnInfo(name = "area")
-    val strArea: String? = "",
-    @ColumnInfo(name = "category")
-    val strCategory: String? = "",
-    @ColumnInfo(name = "instructions")
-    val strInstructions: String? = "",
-    @ColumnInfo(name = "meal")
-    val strMeal: String? = "",
-    @ColumnInfo(name = "meal_thumb")
-    val strMealThumb: String? = "",
-    @ColumnInfo(name = "source")
-    val strSource: String? = "",
-    @ColumnInfo(name = "tags")
-    val strTags: String? = "",
-    @ColumnInfo(name = "youtube")
-    val strYoutube: String? = ""
+    @ColumnInfo(name = "strMeal")
+    val strMeal: String,
+    @ColumnInfo(name = "strCategory")
+    val strCategory: String,
+    @ColumnInfo(name = "strMealThumb")
+    val strMealThumb: String
 )

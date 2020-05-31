@@ -4,6 +4,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.taste.app.model.Category
+import com.taste.app.model.Ingredients
 import com.taste.app.model.Meal
 import org.junit.After
 import org.junit.Before
@@ -51,6 +52,22 @@ open class TasteDatabaseTest {
         fun dummyMeals(): List<Meal> {
             return arrayListOf(
                 Meal("1",
+                    "Apple Frangipan Tart",
+                    "Dessert",
+                    "http://www.themealdb.com/api.php/preview/1"
+                ),
+                Meal(
+                    "2",
+                    "Prawns",
+                    "Sea Food",
+                    "http://www.themealdb.com/api.php/preview/2"
+                )
+            )
+        }
+
+        fun dummyIngredients(): List<Ingredients> {
+            return arrayListOf(
+                Ingredients("1",
                     "South Africa",
                     "Dessert",
                     "Instructions",
@@ -60,7 +77,7 @@ open class TasteDatabaseTest {
                     "Apple, Dessert, Tart",
                     "https://www.youtube.com/kduo4734235243617"
                 ),
-                Meal(
+                Ingredients(
                     "2",
                     "England",
                     "Sea Food",

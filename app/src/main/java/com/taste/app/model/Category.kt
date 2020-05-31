@@ -5,16 +5,16 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "category_table")
+@Entity(tableName = "category")
 data class Category(
     @NonNull
     @PrimaryKey
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "idCategory")
     val idCategory: String,
-    @ColumnInfo(name = "category")
-    val strCategory: String? = "",
-    @ColumnInfo(name = "category_description")
-    val strCategoryDescription: String? = "",
-    @ColumnInfo(name = "category_thumb")
-    val strCategoryThumb: String? = ""
+    @ColumnInfo(name = "strCategory")
+    val strCategory: String,
+    @ColumnInfo(name = "strCategoryDescription")
+    val strCategoryDescription: String,
+    @ColumnInfo(name = "strCategoryThumb")
+    val strCategoryThumb: String
 )

@@ -13,10 +13,10 @@ abstract class CategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertAll(categories: List<Category>)
 
-    @Query("SELECT * FROM category_table")
+    @Query("SELECT * FROM category")
     abstract fun getAll(): LiveData<List<Category>>
 
-    @Query("SELECT * FROM category_table WHERE id=:id")
+    @Query("SELECT * FROM category WHERE idCategory=:id")
     abstract fun findById(id: String): LiveData<Category>
 
 }
