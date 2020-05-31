@@ -1,7 +1,6 @@
 package com.taste.app.api
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.taste.app.util.LiveDataCallAdapterFactory
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okio.buffer
@@ -35,7 +34,6 @@ class TheMealDbServiceTest  {
         service = Retrofit.Builder()
             .baseUrl(mockWebServer.url("/"))
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
             .create(TheMealDbService::class.java)
     }

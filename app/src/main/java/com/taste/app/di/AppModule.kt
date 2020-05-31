@@ -6,7 +6,6 @@ import com.taste.app.api.TheMealDbService
 import com.taste.app.database.CategoryDao
 import com.taste.app.database.MealDao
 import com.taste.app.database.TasteDatabase
-import com.taste.app.util.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -14,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 
-@Module(includes = [ViewModelModule::class])
+@Module()
 class AppModule() {
 
     @Singleton
@@ -23,7 +22,6 @@ class AppModule() {
         return Retrofit.Builder()
             .baseUrl("https://www.themealdb.com/")
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
             .create(TheMealDbService::class.java)
     }
