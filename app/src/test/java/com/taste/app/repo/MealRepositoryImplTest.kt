@@ -55,7 +55,7 @@ class MealRepositoryImplTest {
     }
 
     @Test
-    fun `getCategoriesFromNetwork should invoke the fetch category service call`() {
+    fun `fetchCategories should invoke the fetch category service call`() {
         val successResponse = Response.success(CategoryResponse(arrayListOf()))
 
         `when`(mockService.fetchCategories()).thenReturn(mockCategoryResponseCall)
@@ -67,7 +67,19 @@ class MealRepositoryImplTest {
     }
 
     @Test
-    fun `getCategoriesFromDb should invoke the category dao getAll`() {
+    fun `saveCategories should save the categories to the database`() {
+        val expectedCategories = MutableLiveData(dummyCategories())
+
+        `when`(mockCategoryDao.getAll()).thenReturn(expectedCategories)
+
+        repository.saveCategories(expectedCategories.value!!)
+
+        verify(mockCategoryDao).insertAll(expectedCategories.value!!)
+        assertEquals(expectedCategories.value, mockCategoryDao.getAll().value)
+    }
+
+    @Test
+    fun `getCategories should invoke the category dao getAll`() {
         val expectedCategories = MutableLiveData<List<Category>>()
         expectedCategories.value = dummyCategories()
 
@@ -80,7 +92,7 @@ class MealRepositoryImplTest {
     }
 
     @Test
-    fun `getMealsFromNetwork should invoke the fetch meals service call`() {
+    fun `fetchMeals should invoke the fetch meals service call`() {
         val category = "52772"
         val successResponse = Response.success(MealResponse(arrayListOf()))
 
@@ -93,7 +105,19 @@ class MealRepositoryImplTest {
     }
 
     @Test
-    fun `getMealsFromDb should invoke the meals dao getMealsByCategory`() {
+    fun `saveMeals should save the meals to the database`() {
+        val expectedMeals = MutableLiveData(dummyMeals())
+
+        `when`(mockMealDao.getAll()).thenReturn(expectedMeals)
+
+        repository.saveMeals(expectedMeals.value!!)
+
+        verify(mockMealDao).insertAll(expectedMeals.value!!)
+        assertEquals(expectedMeals.value, mockMealDao.getAll().value)
+    }
+
+    @Test
+    fun `getMealsByCategory should invoke the meals dao getMealsByCategory`() {
         val category = "52772"
         val expectedMeals = MutableLiveData<List<Meal>>()
         expectedMeals.value = dummyMeals()

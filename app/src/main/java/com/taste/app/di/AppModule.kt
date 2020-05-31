@@ -8,12 +8,15 @@ import com.taste.app.database.MealDao
 import com.taste.app.database.TasteDatabase
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 
-@Module(includes = [ViewModelModule::class])
+@Module(includes = [ViewModelModule::class, RepositoryModule::class])
 class AppModule() {
 
     @Singleton
@@ -46,5 +49,13 @@ class AppModule() {
     fun provideMealDao(database: TasteDatabase): MealDao {
         return database.mealDao()
     }
+
+    @IoDispatcher
+    @Provides
+    fun providesIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+    @Retention(AnnotationRetention.BINARY)
+    @Qualifier
+    annotation class IoDispatcher
 
 }

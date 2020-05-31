@@ -14,7 +14,7 @@ data class Meal(
     @ColumnInfo(name = "strMeal")
     val strMeal: String,
     @ColumnInfo(name = "strCategory")
-    val strCategory: String,
+    var strCategory: String,
     @ColumnInfo(name = "strMealThumb")
     val strMealThumb: String
 )
