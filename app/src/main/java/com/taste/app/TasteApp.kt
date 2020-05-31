@@ -8,7 +8,6 @@ import javax.inject.Inject
 
 class TasteApp @Inject constructor() : Application(), HasAndroidInjector {
 
-
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 

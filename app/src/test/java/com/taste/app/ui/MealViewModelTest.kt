@@ -22,6 +22,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations.initMocks
 import retrofit2.Response
+import util.InstantAppExecutors
 import util.TestCoroutineRule
 import util.dummyCategories
 import util.dummyMeals
@@ -29,7 +30,7 @@ import util.dummyMeals
 
 @ExperimentalCoroutinesApi
 @RunWith(JUnit4::class)
-class CategoryViewModelTest {
+class MealViewModelTest {
 
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
@@ -37,7 +38,7 @@ class CategoryViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var viewModel: CategoryViewModel
+    private lateinit var viewModel: MealViewModel
 
     @Mock
     private lateinit var mockRepository: MealRepository
@@ -45,7 +46,7 @@ class CategoryViewModelTest {
     @Before
     fun setUp() {
         initMocks(this)
-        viewModel = CategoryViewModel(mockRepository, Dispatchers.Unconfined)
+        viewModel = MealViewModel(mockRepository, InstantAppExecutors(), Dispatchers.Unconfined)
     }
 
     @Test

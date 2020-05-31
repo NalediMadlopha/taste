@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Taste</string>
+
+    <string name="category_card_view_image_content_description">Category image</string>
+
+    <string name="message_successful_update">Update was successful</string>
+    <string name="message_unsuccessful_update">Update was unsuccessful. Please ensure that your device is connected to the internet.</string>
 </resources>
