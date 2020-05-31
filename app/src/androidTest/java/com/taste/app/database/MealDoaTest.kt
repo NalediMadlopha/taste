@@ -2,9 +2,8 @@ package com.taste.app.database
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertThat
+import org.hamcrest.CoreMatchers
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -29,7 +28,7 @@ class MealDaoTest : TasteDatabaseTest() {
     fun insertAll_should_insert_a_list_of_meals_to_the_database() {
         database.mealDao().insertAll(dummyMeals())
 
-        assertNotNull(database.mealDao().getAll().getOrAwaitValue())
+        Assert.assertNotNull(database.mealDao().getAll().getOrAwaitValue())
     }
 
     @Test
@@ -38,7 +37,7 @@ class MealDaoTest : TasteDatabaseTest() {
 
         val meals = database.mealDao().getAll().getOrAwaitValue()
 
-        assertThat(meals.size, equalTo(2))
+        Assert.assertThat(meals.size, CoreMatchers.equalTo(2))
     }
 
     @Test
@@ -48,8 +47,8 @@ class MealDaoTest : TasteDatabaseTest() {
 
         val meals = database.mealDao().getMealsByCategory(category).getOrAwaitValue()
 
-        assertThat(meals.size, equalTo(1))
-        assertThat(meals.first().strCategory, equalTo(category))
+        Assert.assertThat(meals.size, CoreMatchers.equalTo(1))
+        Assert.assertThat(meals.first().strCategory, CoreMatchers.equalTo(category))
     }
 
     @Test
@@ -58,7 +57,7 @@ class MealDaoTest : TasteDatabaseTest() {
 
         val meal = database.mealDao().findById("2").getOrAwaitValue()
 
-        assertThat(meal, equalTo(dummyMeals()[1]))
+        Assert.assertThat(meal, CoreMatchers.equalTo(dummyMeals()[1]))
     }
 
 }

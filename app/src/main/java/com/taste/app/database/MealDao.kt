@@ -10,16 +10,16 @@ import com.taste.app.model.Meal
 @Dao
 abstract class MealDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertAll(meals: List<Meal>)
 
-    @Query("SELECT * FROM meal_table")
+    @Query("SELECT * FROM meal")
     abstract fun getAll(): LiveData<List<Meal>>
 
-    @Query("SELECT * FROM meal_table WHERE category=:category")
+    @Query("SELECT * FROM meal WHERE strCategory=:category")
     abstract fun getMealsByCategory(category: String): LiveData<List<Meal>>
 
-    @Query("SELECT * FROM meal_table WHERE id=:id")
+    @Query("SELECT * FROM meal WHERE idMeal=:id")
     abstract fun findById(id: String): LiveData<Meal>
 
 }

@@ -10,7 +10,7 @@ import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -18,7 +18,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import util.getOrAwaitValue
 
 @RunWith(JUnit4::class)
 class TheMealDbServiceTest  {
@@ -49,61 +48,62 @@ class TheMealDbServiceTest  {
     @Test
     fun `getCategories should hit the categories endpoint`() {
         enqueueResponse("categories.json")
-        (service.getCategories().getOrAwaitValue() as ApiSuccessResponse).body
 
+        service.fetchCategories().execute()
         val request = mockWebServer.takeRequest()
 
-        assertThat(request.path, `is`("/categories.php"))
+        assertThat(request.path, `is`("/api/json/v1/1/categories.php"))
     }
 
     @Test
-    fun `getCategories should return a list of categories`() {
-        enqueueResponse("categories.json")
-        val categories = (service.getCategories().getOrAwaitValue() as ApiSuccessResponse).body
+    fun `getCategories should return a null category list if the service returns an error response`() {
+        enqueueResponse("error.json")
 
+        val response = service.fetchCategories().execute()
         mockWebServer.takeRequest()
 
-        assertFalse(categories.isNullOrEmpty())
+        assertTrue(response.body()?.categories.isNullOrEmpty())
+    }
+
+    @Test
+    fun `getCategories should return a list of categories if the response is successful`() {
+        enqueueResponse("categories.json")
+
+        val response = service.fetchCategories().execute()
+        mockWebServer.takeRequest()
+
+        assertTrue(response.isSuccessful)
+        assertFalse(response.body()?.categories.isNullOrEmpty())
     }
 
     @Test
     fun `getMeals should hit the filter endpoint`() {
         enqueueResponse("meals.json")
-        (service.getMeals("Sea Food").getOrAwaitValue() as ApiSuccessResponse).body
 
+        service.fetchMeals("Sea Food").execute()
         val request = mockWebServer.takeRequest()
 
-        assertThat(request.path, `is`("/filter.php?c=Sea%20Food"))
+        assertThat(request.path, `is`("/api/json/v1/1/filter.php?c=Sea%20Food"))
+    }
+
+    @Test
+    fun `getMeals should return a null meal list if the service returns an error response`() {
+        enqueueResponse("error.json")
+
+        val response = service.fetchMeals("Sea Food").execute()
+        mockWebServer.takeRequest()
+
+        assertTrue(response.body()?.meals.isNullOrEmpty())
     }
 
     @Test
     fun `getMeals should return a list of meals`() {
         enqueueResponse("meals.json")
-        val meals = (service.getCategories().getOrAwaitValue() as ApiSuccessResponse).body
 
+        val response = service.fetchMeals("Sea Food").execute()
         mockWebServer.takeRequest()
 
-        assertFalse(meals.isNullOrEmpty())
-    }
-
-    @Test
-    fun `getMeal should hit the lookup endpoint`() {
-        enqueueResponse("meal.json")
-        (service.getMeal("52772").getOrAwaitValue() as ApiSuccessResponse).body
-
-        val request = mockWebServer.takeRequest()
-
-        assertThat(request.path, `is`("/lookup.php?i=52772"))
-    }
-
-    @Test
-    fun `getMeal should return a specific meal`() {
-        enqueueResponse("meal.json")
-        val meal = (service.getMeal("52772").getOrAwaitValue() as ApiSuccessResponse).body
-
-        mockWebServer.takeRequest()
-
-        assertNotNull(meal)
+        assertFalse(response.body()?.meals.isNullOrEmpty())
     }
 
     private fun enqueueResponse(fileName: String, headers: Map<String, String> = emptyMap()) {

@@ -51,27 +51,18 @@ open class TasteDatabaseTest {
         fun dummyMeals(): List<Meal> {
             return arrayListOf(
                 Meal("1",
-                    "South Africa",
-                    "Dessert",
-                    "Instructions",
                     "Apple Frangipan Tart",
-                    "http://www.themealdb.com/api.php/preview/1",
-                    "https://www.bbcgoodfood.com/recipes/778642/apple-and-blackberry-crumble",
-                    "Apple, Dessert, Tart",
-                    "https://www.youtube.com/kduo4734235243617"
+                    "Dessert",
+                    "http://www.themealdb.com/api.php/preview/1"
                 ),
                 Meal(
                     "2",
-                    "England",
-                    "Sea Food",
-                    "Instructions",
                     "Prawns",
-                    "http://www.themealdb.com/api.php/preview/2",
-                    "https://www.bbcgoodfood.com/recipes/778642/apple-and-blackberry-crumble",
-                    "Sea Food, Fish, Prawns",
-                    "https://www.youtube.com/kduo4734235243617"
+                    "Sea Food",
+                    "http://www.themealdb.com/api.php/preview/2"
                 )
             )
         }
+
     }
 }

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.taste.app.model.Category
 import com.taste.app.model.Meal
 
-@Database(entities = [Category::class, Meal::class], version = 1, exportSchema = false)
+@Database(entities = [Category::class, Meal::class], version = 2, exportSchema = false)
 abstract class TasteDatabase : RoomDatabase() {
 
     abstract fun categoryDao(): CategoryDao
