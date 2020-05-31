@@ -21,7 +21,7 @@ This project follows common architecture principles and makes use of the recomme
 Remote Data Source
 ------------------
 
-Taste receives its data from https://themealdb.com, an open, crowd-sourced database of Recipes from around the world. To connect to the APIs, the app makes use of Retrofit which is a type-safe HTTP client for Android and Java. Retrofit makes it easy to consume JSON or XML data which is parsed.
+Taste receives its data from [TheMealDb](https://themealdb.com), an open, crowd-sourced database of Recipes from around the world. To connect to the APIs, the app makes use of Retrofit which is a type-safe HTTP client for Android and Java. Retrofit makes it easy to consume JSON or XML data which is parsed.
 
 Model
 ------
